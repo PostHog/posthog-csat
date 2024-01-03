@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
+import confetti from "canvas-confetti";
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -10,7 +11,12 @@ export default function Home() {
   const [submitted, setSubmitted] = useState<boolean>(false)
 
   const submitFeedback = () => {
-    alert('submitting feedback' + JSON.stringify({ satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') }))
+    console.log('submitting feedback', { satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') })
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
     setSubmitted(true)
   }
 

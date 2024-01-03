@@ -9,7 +9,7 @@ export default function Home() {
   const [feedback, setFeedback] = useState('')
 
   const submitFeedback = () => {
-    alert('submitting feedback' + JSON.stringify({ satisfaction, feedback, ticketId: searchParams.get('ticketId') }))
+    alert('submitting feedback' + JSON.stringify({ satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') }))
   }
 
   useEffect(() => {

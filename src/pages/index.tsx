@@ -12,7 +12,7 @@ export default function Home() {
 
   const submitFeedback = () => {
     console.log('submitting feedback', { satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') })
-    confetti({
+    void confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }

@@ -128,8 +128,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <div className="text-sm font-medium">
-                  Please help us do better! Can you tell us more about the ratings you gave
-                  us?
+                  What would make it a 5/5?
                 </div>
                 <textarea
                   className="w-full text-sm text-black rounded-[.375rem] mt-3.5 pt-2.5 px-2.5 bg-white"

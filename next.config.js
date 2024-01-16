@@ -1,3 +1,5 @@
+import { env } from "./src/env.js";
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
@@ -16,6 +18,14 @@ const config = {
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/:path*",
+        destination: `${env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'}/:path*`,
+      },
+    ];
   },
 };
 

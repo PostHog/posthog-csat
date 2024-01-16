@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import confetti from "canvas-confetti";
+import { usePostHog } from "posthog-js/react";
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -9,14 +10,15 @@ export default function Home() {
   const [satisfaction, setSatisfaction] = useState<number>(-1)
   const [feedback, setFeedback] = useState('')
   const [submitted, setSubmitted] = useState<boolean>(false)
+  const posthog = usePostHog();
 
   const submitFeedback = () => {
-    console.log('submitting feedback', { satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') })
     void confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
+    posthog?.capture('CSAT Submitted', { satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') })
     setSubmitted(true)
   }
 

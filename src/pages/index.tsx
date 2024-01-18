@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import confetti from "canvas-confetti";
 import { usePostHog } from "posthog-js/react";
+import { env } from "~/env";
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -18,7 +19,17 @@ export default function Home() {
       spread: 70,
       origin: { y: 0.6 }
     });
-    posthog?.capture('CSAT Submitted', { satisfaction, feedback, ticketId: searchParams.get('ticketId'), userId: searchParams.get('userId') })
+    const userId = searchParams.get('userId')
+    const ticketId = searchParams.get('ticketId')
+    posthog?.capture('survey sent', {
+      ticketId,
+      userId,
+      $survey_id: env.NEXT_PUBLIC_SURVEY_ID,
+      $survey_name: "Customer satisfaction score (CSAT)",
+      $survey_question: "How satisfied are you with PostHog surveys?",
+      $survey_response: satisfaction + 1,
+      $survey_response_1: feedback
+    })
     setSubmitted(true)
   }
 
@@ -128,7 +139,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <div className="text-sm font-medium">
-                  What would make it a 5/5?
+                  What can we do to increase your rating?
                 </div>
                 <textarea
                   className="w-full text-sm text-black rounded-[.375rem] mt-3.5 pt-2.5 px-2.5 bg-white"

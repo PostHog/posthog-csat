@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import confetti from "canvas-confetti";
 import { usePostHog } from "posthog-js/react";
 import { env } from "~/env";
@@ -8,6 +8,8 @@ import { env } from "~/env";
 export default function Home() {
   const searchParams = useSearchParams()
   const satisfactionParam = searchParams.get('satisfaction')
+  const pathname = usePathname()
+  const router = useRouter()
   const [satisfaction, setSatisfaction] = useState<number>(-1)
   const [feedback, setFeedback] = useState('')
   const [submitted, setSubmitted] = useState<boolean>(false)
@@ -38,6 +40,16 @@ export default function Home() {
   useEffect(() => {
     setSatisfaction(parseInt(satisfactionParam ?? '-1'))
   }, [satisfactionParam])
+
+  useEffect(() => {
+    if (satisfaction !== -1) {
+      const current = new URLSearchParams(Array.from(searchParams.entries()))
+      current.set('satisfaction', satisfaction.toString())
+      router.replace(`${pathname}?${current.toString()}`, {
+        scroll: false,
+      })
+    }
+  }, [satisfaction])
 
   return (
     <>

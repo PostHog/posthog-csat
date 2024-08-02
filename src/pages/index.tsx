@@ -24,10 +24,12 @@ export default function Home() {
     const userId = searchParams.get('userId')
     const ticketId = searchParams.get('ticketId')
     const ticketTeam = searchParams.get('ticketTeam')
+    const initialTargetArea = searchParams.get('initialTargetArea')
     posthog?.capture('survey sent', {
       ticketId,
       userId,
       ticketTeam,
+      initialTargetArea,
       $survey_id: env.NEXT_PUBLIC_SURVEY_ID,
       $survey_name: "Customer satisfaction score (CSAT)",
       $survey_question: "How satisfied are you with PostHog surveys?",

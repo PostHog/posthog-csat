@@ -155,7 +155,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <div className="text-sm font-medium">
-                  What can we do to increase your rating?
+                  Anything we could have done better?
                 </div>
                 <textarea
                   className="w-full text-sm text-black rounded-[.375rem] mt-3.5 pt-2.5 px-2.5 bg-white"
